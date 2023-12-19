@@ -261,6 +261,21 @@ public class DatabaseConnect
         }
     }
 
+    public void deleteRoutes()
+    {
+        try {
+            Statement stmt = conn.createStatement();
+            String sql = "DELETE FROM StudentRouteLinker;";
+            stmt.executeUpdate(sql);
+            sql = "DELETE FROM Routes;";
+            stmt.executeUpdate(sql);
+            conn.commit();
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public LinkedList<Integer> getStudentTimetable(int studentID) //todo add data for tommorow to test or just set it instead of now to a particular date allowing for testing
     {
         LinkedList<Integer> timetable = new LinkedList<Integer>();

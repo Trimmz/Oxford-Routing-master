@@ -251,6 +251,7 @@ public class AdminInterface {
         //TODO PROBABLY DONT EVEN NEED BUSYNESS BUT LETS SEE
         //TODO MAKE SURE TO REMOVE ALL DATA IN ROUTES AND STUDENT ROUTE LINKER BEFORE CARRYING OUT CALC
         //connection.resetBusyness();
+        connection.deleteRoutes();
         connection.calculateRouting();
         System.out.println(connection.getStudentTimetable(1));
         System.out.println(connection.getListOfPlacesOnTimetable(1));
