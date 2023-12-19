@@ -30,7 +30,7 @@ public class StudentInterface {
                 joinEvent();
                 break;
             case 4:
-                removeEvent();
+                leaveEvent();
                 break;
             case 5:
                 break;
@@ -40,8 +40,12 @@ public class StudentInterface {
     }
 
     private void joinEvent() {
-        System.out.println("Here is a list of the existing events, press the corresponding key to add it to your timetable for the next day: ");
-
+        DatabaseConnect conn = new DatabaseConnect();
+        Scanner input = new Scanner(System.in);
+        System.out.println("Here is a list of the existing events, press the corresponding key to add it to your timetable for the next day: "); //TODO figure out if this is really meant to say for the next day and do for remove event asw
+        conn.getListOfEvents();
+        int event = input.nextInt();
+        conn.addStudentToEvent(studentID, event);
     }
 
     private void viewShortestRoutes() {
@@ -56,8 +60,13 @@ public class StudentInterface {
         conn.viewStudentTimetable(studentID);
     }
 
-    private void removeEvent()
+    private void leaveEvent()
     {
-
+        DatabaseConnect conn = new DatabaseConnect();
+        Scanner input = new Scanner(System.in);
+        System.out.println("Here is a list of the existing events, press the corresponding key to remove it from your timetable for the next day: ");
+        conn.getListOfEvents();
+        int event = input.nextInt();
+        conn.removeStudentFromEvent(studentID, event);
     }
 }

@@ -18,10 +18,10 @@ public class Main {
             System.out.println("Login Successful");
             if(Objects.equals(name, "a"))
             {
-                AdminInterface adminInterface = new AdminInterface();
+                new AdminInterface();
             }
             else{
-                StudentInterface studentInterface = new StudentInterface(name);
+                new StudentInterface(name);
             }
         }
         else{

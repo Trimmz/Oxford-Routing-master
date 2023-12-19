@@ -1,5 +1,4 @@
 import DatabaseConnect.DatabaseConnect;
-import Dijkstra.Dijkstra;
 
 import java.time.Year;
 import java.util.Scanner;
@@ -249,7 +248,8 @@ public class AdminInterface {
         System.out.println("Calculating routing...");
         DatabaseConnect connection = new DatabaseConnect();
         //TODO PROBABLY DONT EVEN NEED BUSYNESS BUT LETS SEE
-        //TODO MAKE SURE TO REMOVE ALL DATA IN ROUTES AND STUDENT ROUTE LINKER BEFORE CARRYING OUT CALC
+        //todo should remove student event links when it is past the date
+
         //connection.resetBusyness();
         connection.deleteRoutes();
         connection.calculateRouting();
