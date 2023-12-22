@@ -250,7 +250,7 @@ public class AdminInterface {
         //TODO PROBABLY DONT EVEN NEED BUSYNESS BUT LETS SEE
         //todo should remove student event links when it is past the date
 
-        //connection.resetBusyness();
+        connection.resetBusyness();
         connection.deleteRoutes();
         connection.calculateRouting();
         System.out.println(connection.getStudentTimetable(1));

@@ -347,17 +347,17 @@ public class DatabaseConnect
 
     }
 
-//    public void resetBusyness()
-//    {
-//        try {
-//            Statement stmt = conn.createStatement();
-//            stmt.executeUpdate("UPDATE Edge set Busyness = BaseDistance");
-//            conn.commit();
-//            stmt.close();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public void resetBusyness()
+    {
+        try {
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate("UPDATE Edge set Busyness = BaseDistance");
+            conn.commit();
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public int getStudentID(String name)
     {
