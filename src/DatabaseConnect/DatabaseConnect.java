@@ -219,7 +219,7 @@ public class DatabaseConnect
         }
     }
 
-    public void viewStudentTimetable(int studentID){//todo fix so it only shows tommorows timetable but should also have a function to show all events to be easily modifiable
+    public void viewStudentTimetable(int studentID){//todo fix so it only shows tomorrows timetable but should also have a function to show all events to be easily modifiable
         //System.out.println(getListOfPlacesOnTimetable(studentID));
         try {
             Statement stmt = conn.createStatement();
@@ -427,7 +427,7 @@ public class DatabaseConnect
         }
     }
 
-    public LinkedList<Integer> getStudentTimetable(int studentID) //todo add data for tommorow to test or just set it instead of now to a particular date allowing for testing
+    public LinkedList<Integer> getStudentTimetable(int studentID) //todo add data for tomorrow to test or just set it instead of now to a particular date allowing for testing
     {
         LinkedList<Integer> timetable = new LinkedList<Integer>();
         try {
@@ -447,11 +447,12 @@ public class DatabaseConnect
         }
         catch(SQLException e)
         {
+
         }
         return timetable;
     }
 
-    public LinkedList<Integer> getListOfPlacesOnTimetable(int studentID) //todo add data for tommorow to test or just set it instead of now to a particular date allowing for testing
+    public LinkedList<Integer> getListOfPlacesOnTimetable(int studentID) //todo add data for tomorrow to test or just set it instead of now to a particular date allowing for testing
     {
         LinkedList<Integer> timetable = new LinkedList<Integer>();
         try {
