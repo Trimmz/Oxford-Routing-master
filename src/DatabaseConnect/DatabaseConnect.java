@@ -38,7 +38,6 @@ public class DatabaseConnect
             Class.forName("org.sqlite.JDBC");//Specify the SQLite Java driver
             conn = DriverManager.getConnection("jdbc:sqlite:test.db");//Specify the database, since relative in the main project folder
             conn.setAutoCommit(false);// Important as you want control of when data is written
-            System.out.println("Opened database successfully");
         } catch (Exception e)
         {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -251,9 +250,8 @@ public class DatabaseConnect
         }
     }
 
-    public void calculateRouting()
+    public void calculateRouting(int businessFactor)
     {
-        long startTime = System.nanoTime();
         try {//TODO MOST IMPORTANT IS TO REMOVE DATA FOR EVENTS THAT HAPPENED ALREADY
             Statement stmt = conn.createStatement();
             ResultSet numberOfStudents = stmt.executeQuery("SELECT COUNT(StudentID) FROM Student;");
@@ -265,9 +263,6 @@ public class DatabaseConnect
             String sql;
             LinkedList<Integer> route;
             int routeNumber = 0;
-
-            //Graph<Integer, Integer> g = mapToGraph();
-
 
             int studentEventLinkerID;
             for(int i = 1; i<=studentCount; i++)
@@ -299,6 +294,8 @@ public class DatabaseConnect
                         sql = "INSERT INTO Routes (EdgeID, StepNumber, RouteNumber)\n" +
                                 "VALUES (" + edgeID + ", " + k + ", " + routeNumber + ");";
                         stmt.executeUpdate(sql);
+                        sql = "UPDATE Edge SET Busyness = Busyness + " + businessFactor + " WHERE EdgeID = " + edgeID + ";";
+                        stmt.executeUpdate(sql);
                         conn.commit();
                     }
 
@@ -310,9 +307,6 @@ public class DatabaseConnect
         {
             System.out.println(e);
         }
-
-        long endTime = System.nanoTime();
-        System.out.println((endTime-startTime)/1000000);
     }
 
     public boolean isStudent(String name, String password)

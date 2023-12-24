@@ -245,15 +245,14 @@ public class AdminInterface {
 
     public void calculateRouting()
     {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Choose a busyness factor that will affect how busy a path is after a person is routed through it (Enter an integer greater than 0. The default is 1): ");
+        int businessFactor = input.nextInt();
         System.out.println("Calculating routing...");
         DatabaseConnect connection = new DatabaseConnect();
-        //TODO PROBABLY DONT EVEN NEED BUSYNESS BUT LETS SEE
         //todo should remove student event links when it is past the date
-
         connection.resetBusyness();
         connection.deleteRoutes();
-        connection.calculateRouting();
-        System.out.println(connection.getStudentTimetable(1));
-        System.out.println(connection.getListOfPlacesOnTimetable(1));
+        connection.calculateRouting(businessFactor);;
     }
 }

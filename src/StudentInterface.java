@@ -16,6 +16,7 @@ public class StudentInterface {
 
         DatabaseConnect conn = new DatabaseConnect();
         studentID = conn.getStudentID(name);
+        conn.close();
 
         int choice = input.nextInt();
 
