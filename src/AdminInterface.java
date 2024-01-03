@@ -49,9 +49,9 @@ public class AdminInterface {
         DatabaseConnect connection = new DatabaseConnect();
         switch(choice) {
             case 1:
-                System.out.print("StartNode: ");
+                System.out.print("PlaceID 1: ");
                 startNode = input.nextInt();
-                System.out.print("EndNode: ");
+                System.out.print("PlaceID 2: ");
                 endNode = input.nextInt();
                 System.out.print("Distance: ");
                 distance = input.nextInt();
@@ -59,11 +59,12 @@ public class AdminInterface {
                 connection.close();
                 break;
             case 2:
-                    System.out.print("StartNode: ");
+                    System.out.print("PlaceID 1: ");
                     startNode = input.nextInt();
-                    System.out.print("EndNode: ");
+                    System.out.print("PlaceID 2: ");
                     endNode = input.nextInt();
                     connection.removeEdge(startNode, endNode);
+                    connection.removeEdge(endNode, startNode);
                     connection.close();
                     break;
             default:
@@ -119,7 +120,7 @@ public class AdminInterface {
         DatabaseConnect connection = new DatabaseConnect();
         switch(choice) {
             case 1:
-                System.out.print("Name (No Spaces First Letters Must Be Capitals: "); //TODO SPECIFY FULL NAME NO SPACES AND CAPS FOR START
+                System.out.print("Name (No Spaces First Letters Must Be Capitals): "); //TODO SPECIFY FULL NAME NO SPACES AND CAPS FOR START
                 name = input.nextLine();
                 System.out.print("HomePlaceID: ");
                 homeID = input.nextInt();
@@ -129,7 +130,7 @@ public class AdminInterface {
                 connection.addStudent(name, homeID, password);
                 break;
             case 2:
-                System.out.print("Name: "); //TODO SPECIFY FULL NAME NO SPACES AND CAPS FOR START
+                System.out.print("Name (No Spaces First Letter Must Be Capitals): ");
                 name = input.nextLine();
                 System.out.print("Password: ");
                 password = input.nextLine();
@@ -150,8 +151,7 @@ public class AdminInterface {
         System.out.println("[3] Add Student To Event");
         System.out.println("[4] Remove Student From Event");
         System.out.println("[5] View All Events");
-        System.out.println("[6] View All Events For Each Student");
-        //TODO ADD AN OPTION TO SEE ALL PEOPLE AT AN EVENT
+        System.out.println("[6] View All Events For A Student");
         int choice = input.nextInt();
         input.nextLine();
         String eventName;
@@ -166,6 +166,7 @@ public class AdminInterface {
                 System.out.print("PlaceID: ");
                 placeID = input.nextInt();
                 input.nextLine();
+                System.out.println();
                 System.out.println("Start Time");
                 System.out.print("Month(MM): ");
                 startMonth = input.nextInt();
@@ -179,6 +180,7 @@ public class AdminInterface {
                 System.out.print("Minute(MM): ");
                 startMinute = input.nextInt();
                 input.nextLine();
+                System.out.println();
                 System.out.println("EndTime");
                 System.out.print("Month(MM): ");
                 endMonth = input.nextInt();
@@ -205,7 +207,7 @@ public class AdminInterface {
                 connection.removeEvent(eventID);
                 break;
             case 3:
-                System.out.println("Pick the student by pressing its corresponding number");
+                System.out.println("Pick the student by pressing their corresponding number");
                 connection.getListOfStudents();
                 System.out.print("Student: ");
                 studentID = input.nextInt();
@@ -232,7 +234,7 @@ public class AdminInterface {
                 connection.getListOfEvents();
                 break;
             case 6:
-                System.out.println("Pick the student by pressing its corresponding number");
+                System.out.println("Pick the student by pressing their corresponding number");
                 connection.getListOfStudents();
                 System.out.print("Student: ");
                 studentID = input.nextInt();
@@ -250,9 +252,9 @@ public class AdminInterface {
         int businessFactor = input.nextInt();
         System.out.println("Calculating routing...");
         DatabaseConnect connection = new DatabaseConnect();
-        //todo should remove student event links when it is past the date
+        //todo should remove student event links (then remove events) when it is past the date
         connection.resetBusyness();
         connection.deleteRoutes();
-        connection.calculateRouting(businessFactor);;
+        connection.calculateRouting(businessFactor);
     }
 }

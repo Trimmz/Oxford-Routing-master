@@ -45,6 +45,7 @@ public class StudentInterface {
         Scanner input = new Scanner(System.in);
         System.out.println("Here is a list of the existing events, press the corresponding key to add it to your timetable for the next day: "); //TODO figure out if this is really meant to say for the next day and do for remove event asw
         conn.getListOfEvents();
+        System.out.print("Event: ");
         int event = input.nextInt();
         conn.addStudentToEvent(studentID, event);
     }
