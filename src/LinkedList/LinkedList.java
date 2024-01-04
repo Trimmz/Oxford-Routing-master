@@ -1,3 +1,7 @@
+/*
+ * LinkedList class represents a generic linked list that stores elements of type T
+ */
+
 package LinkedList;
 
 import java.util.Iterator;

@@ -1,3 +1,7 @@
+/*
+ * HashMap class represents a basic implementation of a HashMap with key-value pairs
+ */
+
 package HashMap;
 
 import LinkedList.LinkedList;

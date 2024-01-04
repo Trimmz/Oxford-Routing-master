@@ -1,3 +1,10 @@
+/*
+ * StudentInterface Class
+ * Represents the interface for students in the campus navigation system.
+ * Provides options to view personal timetable, view the shortest routes, join events, leave events, or exit.
+ * Uses the DatabaseConnect class to interact with the database for relevant operations.
+ */
+
 import DatabaseConnect.DatabaseConnect;
 
 import java.util.Scanner;

@@ -1,3 +1,7 @@
+/*
+ * PriorityQueueElement class to represent an element in a priority queue
+ */
+
 package PriorityQueue;
 
 public class PriorityQueueElement<T>{

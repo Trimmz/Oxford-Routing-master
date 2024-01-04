@@ -1,3 +1,8 @@
+/*
+ * Main Class
+ * The main entry point of the campus navigation system.
+ */
+
 import DatabaseConnect.DatabaseConnect;
 
 import java.util.Objects;

@@ -1,3 +1,7 @@
+/*
+ * Dijkstra class for finding the shortest path in a graph using Dijkstra's algorithm
+ */
+
 package Dijkstra;
 
 import Graph.Graph;
@@ -22,6 +26,7 @@ public class Dijkstra {
             {
                 // The distance from the start node to the start node is known to be 0
                 distances.add(startNode, 0);
+
                 // Path to get from start node to start node requires going through the startnode //TODO EXPLAIN
                 paths.add(startNode, startNode+""); //TODO EXPLAIN
 
@@ -32,6 +37,7 @@ public class Dijkstra {
             else{
                 distances.add(nodes.getValue(i), Integer.MAX_VALUE);
                 paths.add(nodes.getValue(i), "");
+
                 //Add all nodes on the priority queue with the priority being their distances from A
                 queue.enQueue(nodes.get(i).getValue(), Integer.MAX_VALUE);
             }
@@ -42,7 +48,7 @@ public class Dijkstra {
         {
             // Removes the node at the front from the queue, so it is visited
             int currentNode = queue.deQueue().getValue();
-            LinkedList<Integer> neighbours = g.getNeigbours(currentNode);
+            LinkedList<Integer> neighbours = g.getNeighbours(currentNode);
             for(int i = 0; i<neighbours.length(); i++)
             {
                 if(!vistedNodes.contains(neighbours.get(i).getValue()))
@@ -52,16 +58,12 @@ public class Dijkstra {
 
                     if(newDistance<(Integer) distances.getItem(neighbours.get(i).getValue()).getValue())
                     {
-//                      distances.getItem(neighbours.get(i).getValue()).setValue(distances.getValue(currentNode) + g.getWeight(currentNode, neighbours.get(i).getValue()));
                         distances.changeValue(neighbours.get(i).getValue(), newDistance);
                         paths.changeValue(neighbours.get(i).getValue(), newPath);
                         queue.setPriority(neighbours.get(i).getValue(), newDistance);
                     }
                 }
             }
-            //neighbours.get(i).getValue()
-
-
         }
 
         return paths.getValue(endNode);

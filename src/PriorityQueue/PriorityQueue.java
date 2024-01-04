@@ -1,3 +1,7 @@
+/*
+ * PriorityQueue class for implementing a priority queue using a linked list
+ */
+
 package PriorityQueue;
 
 import LinkedList.LinkedList;

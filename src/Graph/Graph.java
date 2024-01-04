@@ -1,3 +1,7 @@
+/*
+ * Graph class for representing a graph with nodes and weighted edges
+ */
+
 package Graph;
 
 import HashMap.HashMap;
@@ -10,6 +14,8 @@ public class Graph<N, W>{
 
     private int edgeNumber = 0;
     private int maxSize;
+
+    // Constructor to initialize the graph with a specified size and directed/undirected status
     public Graph(int size, boolean isDirected)
     {
         this.isDirected = isDirected;
@@ -17,7 +23,8 @@ public class Graph<N, W>{
         adjList = new HashMap<N, HashMap<N, W>>(maxSize, true);
     }
 
-    public LinkedList<N> getNeigbours(N node)
+    // Method to get neighbours of a given node
+    public LinkedList<N> getNeighbours(N node)
     {
         LinkedList<N> neighbours = new LinkedList<N>();
         if (adjList.contains(node)) {
@@ -28,18 +35,18 @@ public class Graph<N, W>{
         }
 
         return neighbours;
-
     }
 
+    // Method to get the weight of the edge between two nodes
     public W getWeight(N node1, N node2) {
         if (adjList.contains(node1) && adjList.getValue(node1).contains(node2)) {
             return adjList.getValue(node1).getValue(node2);
         }
 
-        return null; // Or you can return a default weight or throw an exception
+        return null;
     }
 
-    //function called by add()
+    //Private method to add an edge between two nodes on an undirected graph
     private void addEdge(N node1, N node2, W weight)
     {
         if(!nodes.contains((node1)))
@@ -61,6 +68,7 @@ public class Graph<N, W>{
         }
     }
 
+    // Public method to add an edge between two nodes on a directed graph and update edge count
     public void add(N node1, N node2, W weight)
     {
         addEdge(node1, node2, weight);
@@ -71,6 +79,7 @@ public class Graph<N, W>{
         }
     }
 
+    // Method to represent the graph as a string
     public String toString()
     {
         StringBuilder out = new StringBuilder("{");
@@ -89,6 +98,7 @@ public class Graph<N, W>{
     {
         return nodes.length();
     }
+
     public int getMaxSize()
     {
         return maxSize;

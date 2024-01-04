@@ -1,3 +1,10 @@
+/*
+ * DatabaseConnect Class
+ * Manages SQLite database for a campus navigation system.
+ * Provides methods for inserting, removing, and retrieving data,
+ * calculating routes, and performing database operations.
+ */
+
 package DatabaseConnect;
 
 import Dijkstra.Dijkstra;

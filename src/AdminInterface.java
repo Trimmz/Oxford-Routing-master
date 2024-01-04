@@ -1,3 +1,10 @@
+/*
+ * AdminInterface Class
+ * Provides an interactive console interface for managing campus navigation system data.
+ * Allows administrators to manage paths, buildings, students, events, calculate routing,
+ * and perform related operations using the DatabaseConnect class.
+ */
+
 import DatabaseConnect.DatabaseConnect;
 
 import java.time.Year;

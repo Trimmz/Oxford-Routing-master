@@ -1,3 +1,7 @@
+/*
+ * HashMapElement class represents an element in a generic key-value pair for a HashMap
+ */
+
 package HashMap;
 
 public class HashMapElement<K, V>{

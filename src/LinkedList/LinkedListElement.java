@@ -1,3 +1,7 @@
+/*
+ * LinkedListElement class to represent an element in a linked list
+ */
+
 package LinkedList;
 
 public class LinkedListElement <T>{
