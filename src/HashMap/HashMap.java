@@ -8,7 +8,7 @@ public class HashMap<K, V>{
     private int size = 0;
 
     private boolean wasModified;
-    HashMapElement<K, V>[] items;
+    private HashMapElement<K, V>[] items;
 
     // Initialises an array of key value pairs
     public HashMap(int size) {
