@@ -249,12 +249,12 @@ public class AdminInterface {
     {
         Scanner input = new Scanner(System.in);
         System.out.print("Choose a busyness factor that will affect how busy a path is after a person is routed through it (Enter an integer greater than 0. The default is 1): ");
-        int businessFactor = input.nextInt();
+        int busynessFactor = input.nextInt();
         System.out.println("Calculating routing...");
         DatabaseConnect connection = new DatabaseConnect();
         //todo should remove student event links (then remove events) when it is past the date
         connection.resetBusyness();
         connection.deleteRoutes();
-        connection.calculateRouting(businessFactor);
+        connection.calculateRouting(busynessFactor);
     }
 }
