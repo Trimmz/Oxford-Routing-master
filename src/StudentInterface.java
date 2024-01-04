@@ -59,7 +59,6 @@ public class StudentInterface {
 
     private void viewShortestRoutes() {
         DatabaseConnect conn = new DatabaseConnect();
-        System.out.println(conn.getListOfPlacesOnTimetable(studentID));
         conn.viewShortestRoutes(studentID);
         
     }
