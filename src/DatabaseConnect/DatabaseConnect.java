@@ -118,6 +118,10 @@ public class DatabaseConnect
             String sql = "DELETE FROM Place WHERE PlaceID = " + buildingID + ";";
 
             stmt.executeUpdate(sql);
+
+            sql = "DELETE FROM Edge Where StartPlaceID = " + buildingID + " OR EndPlaceID = " + buildingID + ";";
+
+            stmt.executeUpdate(sql);
             conn.commit();
             stmt.close();
 
@@ -140,12 +144,12 @@ public class DatabaseConnect
             buildings = new HashMap<Integer, String>(count.getInt("COUNT(PlaceID)"));
 
             // Execute query to get PlaceID and Name of each building
-            ResultSet rs = stmt.executeQuery("SELECT PlaceID, Name FROM Place;");
+            ResultSet rs = stmt.executeQuery("SELECT PlaceID, Name, Description FROM Place;");
 
             // Iterate through the result set and populate the HashMap with PlaceID and Name
             while(rs.next())
             {
-                System.out.println(rs.getInt("PlaceID") + " - " + rs.getString("Name"));
+                System.out.println(rs.getInt("PlaceID") + " - " + rs.getString("Name") + " - " + rs.getString("Description"));
                 buildings.add(rs.getInt("PlaceID"), rs.getString("Name"));
             }
 
