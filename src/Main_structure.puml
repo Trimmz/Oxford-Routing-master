@@ -1,0 +1,313 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "Main",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_1627473325 { 
+   	label=PriorityQueue
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   PriorityQueue1627473325[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)PriorityQueue&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   length: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   queue: LinkedList&lt;PriorityQueueElement&lt;T&gt;&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ deQueue(): PriorityQueueElement&lt;T&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deQueue(value: T): PriorityQueueElement&lt;T&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ display()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ enQueue(value: T, priority: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getPriority(value: T): int</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_1932803762 { 
+   	label=HashMap
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   HashMap1932803762[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)HashMap&lt;K, V&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   items: HashMapElement&lt;K, V&gt;[] [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   maxSize: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   size: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   wasModified: boolean [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ add(key: K, value: V)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ changeValue(key: K, value: V)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ contains(key: K): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ delete(key: K)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getItem(key: K): HashMapElement</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getValue(key: K): V</TD></TR>
+<TR><TD ALIGN="LEFT" >+ length(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ update(key: K, value: V)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_2390489 { 
+   	label=Main
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Main2390489[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Main</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_2612664 { 
+   	label=Tool
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   StringSplitter2612664[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)StringSplitter</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ splitStringToList(input: String): LinkedList&lt;Integer&gt;</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_69062958 { 
+   	label=Graph
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Graph69062958[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Graph&lt;N, W&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   adjList: HashMap&lt;N, HashMap&lt;N, W&gt;&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   edgeNumber: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   isDirected: boolean [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   maxSize: int [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nodes: LinkedList&lt;N&gt; [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ add(node1: N, node2: N, weight: W)</TD></TR>
+<TR><TD ALIGN="LEFT" >- addEdge(node1: N, node2: N, weight: W)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getNeigbours(node: N): LinkedList&lt;N&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getValueAtNode(node: N): HashMap&lt;N, W&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getWeight(node1: N, node2: N): W</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_853681871 { 
+   	label=DatabaseConnect
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   DatabaseConnect853681871[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)DatabaseConnect</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   conn: Connection [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addBuilding(name: String, description: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addEvent(startTime: String, endTime: String, placeID: int, eventName: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addStudent(name: String, homeID: int, password: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ addStudentToEvent(studentID: int, eventID: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ calculateRouting(businessFactor: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ close()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ deleteRoutes()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getListOfEvents()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getListOfPlacesOnTimetable(studentID: int): LinkedList&lt;Integer&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getListOfStudents()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStudentID(name: String): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStudentTimetable(studentID: int): LinkedList&lt;Integer&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insertEdge(startNode: int, endNode: int, distance: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isStudent(name: String, password: String): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ mapToGraph(): Graph&lt;Integer, Integer&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeBuilding(buildingID: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeEdge(startNode: int, endNode: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeEvent(eventID: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeStudent(name: String, password: String)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ removeStudentFromEvent(studentID: int, eventID: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ resetBusyness()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ viewShortestRoutes(studentID: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ viewStudentTimetable(studentID: int)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_87672310 { 
+   	label=Dijkstra
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Dijkstra87672310[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Dijkstra</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ Dijkstra(g: Graph&lt;Integer, Integer&gt;, startNode: int, endNode: int): String</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_958795145 { 
+   	label=LinkedList
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   LinkedList958795145[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)LinkedList&lt;T&gt;</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   front: LinkedListElement&lt;T&gt; [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   length: int [1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ append(value: T)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ contains(value: T): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ get(index: int): LinkedListElement&lt;T&gt;</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getValue(index: int): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ insert(value: T, index: int)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ iterator(): Iterator</TD></TR>
+<TR><TD ALIGN="LEFT" >+ length(): int</TD></TR>
+<TR><TD ALIGN="LEFT" >+ pop(): T</TD></TR>
+<TR><TD ALIGN="LEFT" >+ remove(index: int): T</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+DatabaseConnect853681871 -> Dijkstra87672310[label="calculateRouting() -> Dijkstra()"];
+DatabaseConnect853681871 -> Graph69062958[label="mapToGraph() -> add()"];
+DatabaseConnect853681871 -> StringSplitter2612664[label="calculateRouting() -> splitStringToList()"];
+Graph69062958 -> HashMap1932803762[label="adjList
+[0..1]"];
+Graph69062958 -> LinkedList958795145[label="nodes
+[0..1]"];
+StringSplitter2612664 -> LinkedList958795145[label="splitStringToList() -> append()"];
+    
+}
+@enduml
