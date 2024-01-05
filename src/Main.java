@@ -5,6 +5,7 @@
 
 import DatabaseConnect.DatabaseConnect;
 
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -17,19 +18,15 @@ public class Main {
         String password = input.nextLine();
 
         DatabaseConnect connection = new DatabaseConnect();
-        if(connection.isStudent(name, password))
-        {
+        if (connection.isStudent(name, password)) {
             connection.close();
             System.out.println("Login Successful");
-            if(Objects.equals(name, "a"))
-            {
+            if (Objects.equals(name, "a")) {
                 new AdminInterface();
-            }
-            else{
+            } else {
                 new StudentInterface(name);
             }
-        }
-        else{
+        } else {
             System.out.println("Login Unsuccessful (Contact An Admin For Help)");
         }
     }

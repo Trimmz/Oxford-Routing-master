@@ -56,6 +56,9 @@ public class AdminInterface {
         DatabaseConnect connection = new DatabaseConnect();
         switch(choice) {
             case 1:
+                System.out.println("Select The IDs From This List Of The Current Places On The Map");
+                connection.getListOfBuildings();
+                System.out.println("");
                 System.out.print("PlaceID 1: ");
                 startNode = input.nextInt();
                 System.out.print("PlaceID 2: ");
@@ -66,14 +69,17 @@ public class AdminInterface {
                 connection.close();
                 break;
             case 2:
-                    System.out.print("PlaceID 1: ");
-                    startNode = input.nextInt();
-                    System.out.print("PlaceID 2: ");
-                    endNode = input.nextInt();
-                    connection.removeEdge(startNode, endNode);
-                    connection.removeEdge(endNode, startNode);
-                    connection.close();
-                    break;
+                System.out.println("Select The IDs From This List Of The Current Places On The Map");
+                connection.getListOfBuildings();
+                System.out.println("");
+                System.out.print("PlaceID 1: ");
+                startNode = input.nextInt();
+                System.out.print("PlaceID 2: ");
+                endNode = input.nextInt();
+                connection.removeEdge(startNode, endNode);
+                connection.removeEdge(endNode, startNode);
+                connection.close();
+                break;
             default:
                 //TODO add loop functionality maybe or exit
         }

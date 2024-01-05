@@ -57,16 +57,38 @@ public class DatabaseConnect
     public void insertEdge(int startNode, int endNode, int distance)
     {
         try {
+            if(distance<=0)
+            {
+                throw new IllegalArgumentException("The Distance You Have Input Is Less Than Or Equal To 0. You Can Only Input Integer Values Greater Than 0");
+            }
+
             Statement stmt = conn.createStatement();
 
-            // SQL query to insert an edge into the "Edge" table
-            String sql = "INSERT INTO Edge (StartPlaceID, EndPlaceID, BaseDistance, Busyness) VALUES (" + startNode + ", " + endNode + ", " + distance + ", " + distance + ");";
+            String sql = "SELECT Name FROM Place WHERE PlaceID = " + startNode + ";";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if(rs.next())
+            {
+                sql = "SELECT Name FROM Place WHERE PlaceID = " + endNode + ";";
+                rs = stmt.executeQuery(sql);
+                if(rs.next())
+                {
+                    // SQL query to insert an edge into the "Edge" table
+                    sql = "INSERT INTO Edge (StartPlaceID, EndPlaceID, BaseDistance, Busyness) VALUES (" + startNode + ", " + endNode + ", " + distance + ", " + distance + ");";
+                }else
+                {
+                    System.out.println("The Places Don't Exist In The Database");
+                }
+            }
+            else{
+                System.out.println("The Places Don't Exist In The Database");
+            }
 
             stmt.executeUpdate(sql);
             conn.commit();
             stmt.close();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -238,7 +260,9 @@ public class DatabaseConnect
     {
         try {
             Statement stmt = conn.createStatement();
+
             String sql = "DELETE FROM Event WHERE EventID = " + eventID + ";";
+
             stmt.executeUpdate(sql);
             conn.commit();
             stmt.close();
