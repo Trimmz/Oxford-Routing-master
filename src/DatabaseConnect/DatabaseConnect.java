@@ -64,13 +64,16 @@ public class DatabaseConnect
 
             Statement stmt = conn.createStatement();
 
+            // SQL query to check if the startNode is a place that exists in the "Edge" table
             String sql = "SELECT Name FROM Place WHERE PlaceID = " + startNode + ";";
             ResultSet rs = stmt.executeQuery(sql);
 
             if(rs.next())
             {
+                // SQL query to check if the endNode is a place that exists in the "Edge" table
                 sql = "SELECT Name FROM Place WHERE PlaceID = " + endNode + ";";
                 rs = stmt.executeQuery(sql);
+
                 if(rs.next())
                 {
                     // SQL query to insert an edge into the "Edge" table
@@ -100,8 +103,27 @@ public class DatabaseConnect
         try {
             Statement stmt = conn.createStatement();
 
-            // SQL query to delete an edge from the "Edge" table
-            String sql = "DELETE FROM Edge WHERE StartPlaceID = " + startNode + " AND EndPlaceID = " + endNode + ";";
+            String sql = "SELECT Name FROM Place WHERE PlaceID = " + startNode + ";";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if(rs.next())
+            {
+                // SQL query to check if the endNode is a place that exists in the "Edge" table
+                sql = "SELECT Name FROM Place WHERE PlaceID = " + endNode + ";";
+                rs = stmt.executeQuery(sql);
+
+                if(rs.next())
+                {
+                    // SQL query to delete an edge from the "Edge" table
+                    sql = "DELETE FROM Edge WHERE StartPlaceID = " + startNode + " AND EndPlaceID = " + endNode + ";";
+                }else
+                {
+                    System.out.println("The Places Don't Exist In The Database");
+                }
+            }
+            else{
+                System.out.println("The Places Don't Exist In The Database");
+            }
 
             stmt.executeUpdate(sql);
             conn.commit();
