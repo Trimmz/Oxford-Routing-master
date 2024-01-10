@@ -133,17 +133,26 @@ public class AdminInterface {
         DatabaseConnect connection = new DatabaseConnect();
         switch(choice) {
             case 1:
-                System.out.print("Name (No Spaces First Letters Must Be Capitals): "); //TODO SPECIFY FULL NAME NO SPACES AND CAPS FOR START
+                System.out.print("Username: ");
                 name = input.nextLine();
+                System.out.println("Select the ID of the building that the student resides in");
+                connection.getListOfBuildings();
                 System.out.print("HomePlaceID: ");
                 homeID = input.nextInt();
+                if(!connection.doesBuildingIDExist(homeID))
+                {
+                    System.out.println("The Building ID You Entered Did Not Exist");
+                    break;
+                }
                 input.nextLine();
                 System.out.print("Password: ");
                 password = input.nextLine();
                 connection.addStudent(name, homeID, password);
                 break;
             case 2:
-                System.out.print("Name (No Spaces First Letter Must Be Capitals): ");
+                System.out.println("Enter the username of the student profile you would like to remove");
+                connection.getListOfStudents();
+                System.out.print("Username: ");
                 name = input.nextLine();
                 System.out.print("Password: ");
                 password = input.nextLine();

@@ -14,6 +14,7 @@ import java.sql.*;
 import LinkedList.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import Tool.StringSplitter;
 
 
@@ -114,8 +115,17 @@ public class DatabaseConnect
 
                 if(rs.next())
                 {
-                    // SQL query to delete an edge from the "Edge" table
-                    sql = "DELETE FROM Edge WHERE StartPlaceID = " + startNode + " AND EndPlaceID = " + endNode + ";";
+                    // SQL query to check there is a connection to delete in the first place
+                    sql = "SELECT EdgeID FROM Edge WHERE StartPlaceID = " + startNode + " AND EndPlaceID = " + endNode + ";";
+                    rs = stmt.executeQuery(sql);
+
+                    if(rs.next()) {
+                        // SQL query to delete an edge from the "Edge" table
+                        sql = "DELETE FROM Edge WHERE StartPlaceID = " + startNode + " AND EndPlaceID = " + endNode + ";";
+                    }
+                    else{
+                        System.out.println("The Connection Doesn't Exist In The Database");
+                    }
                 }else
                 {
                     System.out.println("The Places Don't Exist In The Database");
@@ -158,12 +168,21 @@ public class DatabaseConnect
         try {
             Statement stmt = conn.createStatement();
 
-            // SQL query to delete a building from the "Place" table
-            String sql = "DELETE FROM Place WHERE PlaceID = " + buildingID + ";";
+            // SQL statement to check if the building specified exists in the database
+            String sql = "SELECT Name FROM Place WHERE PlaceID = " + buildingID + ";";
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next())
+            {
+                // SQL query to delete a building from the "Place" table
+                sql = "DELETE FROM Place WHERE PlaceID = " + buildingID + ";";
 
-            stmt.executeUpdate(sql);
+                stmt.executeUpdate(sql);
 
-            sql = "DELETE FROM Edge Where StartPlaceID = " + buildingID + " OR EndPlaceID = " + buildingID + ";";
+                sql = "DELETE FROM Edge Where StartPlaceID = " + buildingID + " OR EndPlaceID = " + buildingID + ";";
+            }
+            else{
+                System.out.println("There is no such building");
+            }
 
             stmt.executeUpdate(sql);
             conn.commit();
@@ -209,8 +228,20 @@ public class DatabaseConnect
         try {
             Statement stmt = conn.createStatement();
 
-            // SQL query to insert a student into the "Student" table
-            String sql = "INSERT INTO Student (StudentName, HomePlaceID, Password) VALUES (" + "\"" + name +  "\" " + ", " + homeID + ", " + "\"" + password + "\"" + ");";
+            // SQL query to check that there isn't another student profile with the same username and password
+            String sql = "SELECT StudentID FROM Student WHERE StudentName = \"" + name + "\" AND Password = \"" + password + "\";";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if(!rs.next())
+            {
+                // SQL query to insert a student into the "Student" table
+                sql = "INSERT INTO Student (StudentName, HomePlaceID, Password) VALUES (" + "\"" + name +  "\" " + ", " + homeID + ", " + "\"" + password + "\"" + ");";
+
+            }
+            else{
+                System.out.println("The student you are attempting to add is already stored on the database");
+            }
+
 
             stmt.executeUpdate(sql);
             conn.commit();
@@ -227,8 +258,17 @@ public class DatabaseConnect
         try {
             Statement stmt = conn.createStatement();
 
-            // SQL query to delete a student from the "Student" table
-            String sql = "DELETE FROM Student WHERE StudentName = \"" + name + "\" AND Password = \"" +  password + "\"; ";
+            // SQL query to check that the student to be removed is in the database
+            String sql = "SELECT StudentID FROM Student WHERE StudentName = \"" + name + "\" AND Password = \"" + password + "\";";
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next())
+            {
+                // SQL query to delete a student from the "Student" table
+                sql = "DELETE FROM Student WHERE StudentName = \"" + name + "\" AND Password = \"" +  password + "\"; ";
+            }
+            else{
+                System.out.println("The Student Either Doesn't Exist Or You May Have Entered Their Details Incorrectly");
+            }
 
             stmt.executeUpdate(sql);
             conn.commit();
@@ -236,6 +276,26 @@ public class DatabaseConnect
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public boolean doesBuildingIDExist(int buildingID)
+    {
+        try {
+            Statement stmt = conn.createStatement();
+
+            String sql = "SELECT Name FROM Place WHERE PlaceID = " + buildingID + ";";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if(rs.next())
+            {
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch(SQLException e){
+           throw new RuntimeException(e);
         }
     }
 
