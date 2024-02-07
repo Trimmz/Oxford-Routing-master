@@ -40,8 +40,6 @@ public class AdminInterface {
                 break;
             case 6:
                 break;
-            default:
-                //TODO add loop functionality maybe
         }
     }
 
@@ -80,8 +78,6 @@ public class AdminInterface {
                 connection.removeEdge(endNode, startNode);
                 connection.close();
                 break;
-            default:
-                //TODO add loop functionality maybe or exit
         }
 
     }
@@ -97,7 +93,6 @@ public class AdminInterface {
         String buildingName, description;
 
         DatabaseConnect connection = new DatabaseConnect();
-        //todo switch once routes are populated
         switch(choice) {
             case 1:
                 System.out.print("Building Name: ");
@@ -114,8 +109,6 @@ public class AdminInterface {
                 break;
             case 3:
                 connection.getListOfBuildings();
-            default:
-                //TODO add loop functionality maybe or exit
         }
     }
 
@@ -160,8 +153,6 @@ public class AdminInterface {
                 break;
             case 3:
                 connection.getListOfStudents();
-            default:
-                //TODO add loop functionality maybe or exit
         }
     }
 
@@ -216,7 +207,7 @@ public class AdminInterface {
                 System.out.print("Minute(MM): ");
                 endMinute = input.nextInt();
                 input.nextLine();
-                startTime = Year.now().getValue() + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute + ":00";//TODO maybe don't hardcode to current year
+                startTime = Year.now().getValue() + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute + ":00";
                 endTime = Year.now().getValue() + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute + ":00";
                 connection.addEvent(startTime, endTime, placeID, eventName);
                 break;

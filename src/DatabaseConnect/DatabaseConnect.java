@@ -261,16 +261,19 @@ public class DatabaseConnect
             // SQL query to check that the student to be removed is in the database
             String sql = "SELECT StudentID FROM Student WHERE StudentName = \"" + name + "\" AND Password = \"" + password + "\";";
             ResultSet rs = stmt.executeQuery(sql);
+            String studentID = rs.getString(1);
             if(rs.next())
             {
                 // SQL query to delete a student from the "Student" table
-                sql = "DELETE FROM Student WHERE StudentName = \"" + name + "\" AND Password = \"" +  password + "\"; ";
+                stmt.executeUpdate("DELETE FROM Student WHERE StudentName = \"" + name + "\" AND Password = \"" +  password + "\"; ");
+                // SQL querys to remove any data stored that links back to the student to be removed
+                String studentEventLinkerID = stmt.executeQuery("SELECT StudentEventLinkerID FROM StudentEventLinker WHERE StudentID = \"" + studentID + "\";").getString(1);
+                stmt.executeUpdate("DELETE FROM StudentRouteLinker WHERE StudentEventLinkerID = \"" + studentEventLinkerID + "\"");
+                stmt.executeUpdate("DELETE FROM StudentEventLinker WHERE StudentID = \"" + studentID + "\"");
             }
             else{
                 System.out.println("The Student Either Doesn't Exist Or You May Have Entered Their Details Incorrectly");
             }
-
-            stmt.executeUpdate(sql);
             conn.commit();
             stmt.close();
 
@@ -287,12 +290,7 @@ public class DatabaseConnect
             String sql = "SELECT Name FROM Place WHERE PlaceID = " + buildingID + ";";
             ResultSet rs = stmt.executeQuery(sql);
 
-            if(rs.next())
-            {
-                return true;
-            }else{
-                return false;
-            }
+            return rs.next();
 
         }catch(SQLException e){
            throw new RuntimeException(e);
@@ -325,11 +323,21 @@ public class DatabaseConnect
         try {
             Statement stmt = conn.createStatement();
 
-            // SQL query to insert an event into the "Event" table
-            String sql = "INSERT INTO Event (StartTime, EndTime, PlaceID, EventName) VALUES (\""+startTime+"\", \"" + endTime + "\", " + placeID + ", \"" + eventName + "\");";
+            String sql = "SELECT PlaceID FROM Place WHERE PlaceID = " + placeID + ";";
+            if(stmt.executeQuery(sql).next())
+            {
+                // SQL query to insert an event into the "Event" table
+                sql = "INSERT INTO Event (StartTime, EndTime, PlaceID, EventName) VALUES (\""+startTime+"\", \"" + endTime + "\", " + placeID + ", \"" + eventName + "\");";
 
-            stmt.executeUpdate(sql);
-            conn.commit();
+                stmt.executeUpdate(sql);
+                conn.commit();
+
+                System.out.println("The event was removed");
+            }
+            else{
+                System.out.println("The PlaceID doesnt exist");
+            }
+
             stmt.close();
 
         } catch (SQLException e) {
@@ -343,10 +351,19 @@ public class DatabaseConnect
         try {
             Statement stmt = conn.createStatement();
 
-            String sql = "DELETE FROM Event WHERE EventID = " + eventID + ";";
+            String sql = "SELECT EventID FROM Event WHERE EventID = " + eventID + ";";
 
-            stmt.executeUpdate(sql);
-            conn.commit();
+            if(stmt.executeQuery(sql).next())
+            {
+                sql = "DELETE FROM Event WHERE EventID = " + eventID + ";";
+                stmt.executeUpdate(sql);
+                conn.commit();
+                System.out.println("The event was removed");
+            }
+            else{
+                System.out.println("The EventID doesn't exist");
+            }
+
             stmt.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -376,11 +393,22 @@ public class DatabaseConnect
         try {
             Statement stmt = conn.createStatement();
 
-            // SQL query to delete a student from an event in the "StudentEventLinker" table
-            String sql = "DELETE FROM StudentEventLinker WHERE StudentID = " + studentID + " AND EventID = " +  eventID + "; ";
+            // SQL query to check that the student currently goes to the event
+            String sql = "SELECT StudentEventLinkerID FROM StudentEventLinker WHERE StudentID = " + studentID + " AND EventID = " + eventID + ";";
+            ResultSet rs = stmt.executeQuery(sql);
 
-            stmt.executeUpdate(sql);
-            conn.commit();
+            if(rs.next())
+            {
+                // SQL query to delete a student from an event in the "StudentEventLinker" table
+                sql = "DELETE FROM StudentEventLinker WHERE StudentID = " + studentID + " AND EventID = " +  eventID + "; ";
+                stmt.executeUpdate(sql);
+                conn.commit();
+                System.out.println("This Student Was Removed From The Event");
+            }
+            else{
+                System.out.println("The Student Either Did Not Attend The Event, Or The Details Were Incorrect");
+            }
+
             stmt.close();
 
         } catch (SQLException e) {
