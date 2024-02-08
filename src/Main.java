@@ -21,7 +21,7 @@ public class Main {
         if (connection.isStudent(name, password)) {
             connection.close();
             System.out.println("Login Successful");
-            if (Objects.equals(name, "a")) {
+            if (Objects.equals(name, "EmilyAdmin1")) {
                 new AdminInterface();
             } else {
                 new StudentInterface(name);

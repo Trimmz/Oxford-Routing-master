@@ -77,8 +77,23 @@ public class DatabaseConnect
 
                 if(rs.next())
                 {
-                    // SQL query to insert an edge into the "Edge" table
-                    sql = "INSERT INTO Edge (StartPlaceID, EndPlaceID, BaseDistance, Busyness) VALUES (" + startNode + ", " + endNode + ", " + distance + ", " + distance + ");";
+                    sql = "SELECT EdgeID FROM Edge WHERE StartPlaceID = " + startNode + " AND EndPlaceID = " + endNode + ";";
+                    boolean doesEdgeExistWayOne = stmt.executeQuery(sql).next();
+
+                    sql = "SELECT EdgeID FROM Edge WHERE StartPlaceID = " + endNode + " AND EndPlaceID = " + startNode + ";";
+                    boolean doesEdgeExistWayTwo = stmt.executeQuery(sql).next();
+
+                    if(doesEdgeExistWayOne || doesEdgeExistWayTwo)
+                    {
+                        System.out.println("The edge already exists in the database");
+                    }
+                    else{
+                        // SQL query to insert an edge into the "Edge" table
+                        sql = "INSERT INTO Edge (StartPlaceID, EndPlaceID, BaseDistance, Busyness) VALUES (" + startNode + ", " + endNode + ", " + distance + ", " + distance + ");";
+                        stmt.executeUpdate(sql);
+                        conn.commit();
+                        System.out.println("The path was added");
+                    }
                 }else
                 {
                     System.out.println("The Places Don't Exist In The Database");
@@ -88,19 +103,18 @@ public class DatabaseConnect
                 System.out.println("The Places Don't Exist In The Database");
             }
 
-            stmt.executeUpdate(sql);
-            conn.commit();
             stmt.close();
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
         }
 
     }
 
     // Method to remove a connection between two places into the database
-    public void removeEdge(int startNode, int endNode)
+    public boolean removeEdge(int startNode, int endNode)
     {
+        boolean hasDeleted = false;
         try {
             Statement stmt = conn.createStatement();
 
@@ -122,6 +136,10 @@ public class DatabaseConnect
                     if(rs.next()) {
                         // SQL query to delete an edge from the "Edge" table
                         sql = "DELETE FROM Edge WHERE StartPlaceID = " + startNode + " AND EndPlaceID = " + endNode + ";";
+                        stmt.executeUpdate(sql);
+                        conn.commit();
+                        System.out.println("The path has been removed");
+                        hasDeleted = true;
                     }
                     else{
                         System.out.println("The Connection Doesn't Exist In The Database");
@@ -135,10 +153,8 @@ public class DatabaseConnect
                 System.out.println("The Places Don't Exist In The Database");
             }
 
-            stmt.executeUpdate(sql);
-            conn.commit();
             stmt.close();
-
+            return hasDeleted;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -155,6 +171,7 @@ public class DatabaseConnect
 
             stmt.executeUpdate(sql);
             conn.commit();
+            System.out.println("The building was added");
             stmt.close();
 
         } catch (SQLException e) {
@@ -179,13 +196,15 @@ public class DatabaseConnect
                 stmt.executeUpdate(sql);
 
                 sql = "DELETE FROM Edge Where StartPlaceID = " + buildingID + " OR EndPlaceID = " + buildingID + ";";
+
+                stmt.executeUpdate(sql);
+                conn.commit();
+                System.out.println("The building was removed");
             }
             else{
                 System.out.println("There is no such building");
             }
 
-            stmt.executeUpdate(sql);
-            conn.commit();
             stmt.close();
 
         } catch (SQLException e) {
@@ -236,15 +255,14 @@ public class DatabaseConnect
             {
                 // SQL query to insert a student into the "Student" table
                 sql = "INSERT INTO Student (StudentName, HomePlaceID, Password) VALUES (" + "\"" + name +  "\" " + ", " + homeID + ", " + "\"" + password + "\"" + ");";
-
+                stmt.executeUpdate(sql);
+                conn.commit();
+                System.out.println("The student was added");
             }
             else{
                 System.out.println("The student you are attempting to add is already stored on the database");
             }
 
-
-            stmt.executeUpdate(sql);
-            conn.commit();
             stmt.close();
 
         } catch (SQLException e) {
@@ -270,15 +288,17 @@ public class DatabaseConnect
                 String studentEventLinkerID = stmt.executeQuery("SELECT StudentEventLinkerID FROM StudentEventLinker WHERE StudentID = \"" + studentID + "\";").getString(1);
                 stmt.executeUpdate("DELETE FROM StudentRouteLinker WHERE StudentEventLinkerID = \"" + studentEventLinkerID + "\"");
                 stmt.executeUpdate("DELETE FROM StudentEventLinker WHERE StudentID = \"" + studentID + "\"");
+
+                conn.commit();
+                System.out.println("The student was removed");
             }
             else{
                 System.out.println("The Student Either Doesn't Exist Or You May Have Entered Their Details Incorrectly");
             }
-            conn.commit();
             stmt.close();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("The user details may be incorrect");
         }
     }
 
@@ -332,7 +352,7 @@ public class DatabaseConnect
                 stmt.executeUpdate(sql);
                 conn.commit();
 
-                System.out.println("The event was removed");
+                System.out.println("The event was added");
             }
             else{
                 System.out.println("The PlaceID doesnt exist");
@@ -375,11 +395,30 @@ public class DatabaseConnect
         try {
             Statement stmt = conn.createStatement();
 
-            // SQL query to delete an event from the "Event" table
-            String sql = "INSERT INTO StudentEventLinker (StudentID, EventID) VALUES (" + studentID + ", " + eventID + ");";
+            String sql = "SELECT StudentID FROM Student WHERE StudentID = " + studentID + ";";
 
-            stmt.executeUpdate(sql);
-            conn.commit();
+            if(stmt.executeQuery(sql).next())
+            {
+                sql = "SELECT EventID FROM EVENT WHERE EventID = " + eventID + ";";
+                if(stmt.executeQuery(sql).next())
+                {
+                    // SQL query to delete an event from the "Event" table
+                    sql = "INSERT INTO StudentEventLinker (StudentID, EventID) VALUES (" + studentID + ", " + eventID + ");";
+
+                    stmt.executeUpdate(sql);
+                    conn.commit();
+                    System.out.println("The student has successfully joined the event");
+                }
+                else{
+                    System.out.println("The event does not exist in the database");
+                }
+
+            }
+            else{
+                System.out.println("The student does not exist in the database");
+            }
+
+
             stmt.close();
 
         } catch (SQLException e) {

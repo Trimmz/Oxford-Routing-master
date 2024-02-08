@@ -51,8 +51,13 @@ public class StudentInterface {
         System.out.println("Here is a list of the existing events, press the corresponding key to add it to your timetable for the next day: ");
         conn.getListOfEvents();
         System.out.print("Event: ");
-        int event = input.nextInt();
-        conn.addStudentToEvent(studentID, event);
+        try {
+            int event = input.nextInt();
+            conn.addStudentToEvent(studentID, event);
+        }catch(Exception e)
+        {
+            System.out.println("Please enter a valid integer");
+        }
     }
 
     private void viewShortestRoutes() {

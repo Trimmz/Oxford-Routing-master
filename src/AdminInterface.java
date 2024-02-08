@@ -62,9 +62,15 @@ public class AdminInterface {
                 System.out.print("PlaceID 2: ");
                 endNode = input.nextInt();
                 System.out.print("Distance: ");
-                distance = input.nextInt();
-                connection.insertEdge(startNode, endNode, distance);
-                connection.close();
+
+                try{
+                    distance = input.nextInt();
+                    connection.insertEdge(startNode, endNode, distance);
+                    connection.close();
+                }catch (Exception e)
+                {
+                    System.out.println("The input for distance must be an integer");
+                }
                 break;
             case 2:
                 System.out.println("Select The IDs From This List Of The Current Places On The Map");
@@ -74,8 +80,10 @@ public class AdminInterface {
                 startNode = input.nextInt();
                 System.out.print("PlaceID 2: ");
                 endNode = input.nextInt();
-                connection.removeEdge(startNode, endNode);
-                connection.removeEdge(endNode, startNode);
+                if(!connection.removeEdge(startNode, endNode))
+                {
+                    connection.removeEdge(endNode, startNode);
+                }
                 connection.close();
                 break;
         }
@@ -168,9 +176,9 @@ public class AdminInterface {
         int choice = input.nextInt();
         input.nextLine();
         String eventName;
-        int startMonth, startDay, startHour, startMinute, endMonth, endDay, endHour, endMinute, studentID;
+        String startMonth, startDay, startHour, startMinute, endMonth, endDay, endHour, endMinute;
         String startTime, endTime;
-        int placeID, eventID;
+        int placeID, eventID, studentID;
         DatabaseConnect connection = new DatabaseConnect();
         switch(choice){
             case 1:
@@ -182,31 +190,21 @@ public class AdminInterface {
                 System.out.println();
                 System.out.println("Start Time");
                 System.out.print("Month(MM): ");
-                startMonth = input.nextInt();
-                input.nextLine();
+                startMonth = input.nextLine();
                 System.out.print("Day(DD): ");
-                startDay = input.nextInt();
-                input.nextLine();
+                startDay = input.nextLine();
                 System.out.print("Hour(HH): ");
-                startHour = input.nextInt();
-                input.nextLine();
+                startHour = input.nextLine();
                 System.out.print("Minute(MM): ");
-                startMinute = input.nextInt();
-                input.nextLine();
+                startMinute = input.nextLine();
                 System.out.println();
                 System.out.println("EndTime");
-                System.out.print("Month(MM): ");
-                endMonth = input.nextInt();
-                input.nextLine();
-                System.out.print("Day(DD): ");
-                endDay = input.nextInt();
-                input.nextLine();
+                endMonth = startMonth;
+                endDay = startDay;
                 System.out.print("Hour(HH): ");
-                endHour = input.nextInt();
-                input.nextLine();
+                endHour = input.nextLine();
                 System.out.print("Minute(MM): ");
-                endMinute = input.nextInt();
-                input.nextLine();
+                endMinute = input.nextLine();
                 startTime = Year.now().getValue() + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute + ":00";
                 endTime = Year.now().getValue() + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute + ":00";
                 connection.addEvent(startTime, endTime, placeID, eventName);
@@ -263,11 +261,16 @@ public class AdminInterface {
         Scanner input = new Scanner(System.in);
         System.out.print("Choose a busyness factor that will affect how busy a path is after a person is routed through it (Enter an integer greater than 0. The default is 1): ");
         int busynessFactor = input.nextInt();
-        System.out.println("Calculating routing...");
-        DatabaseConnect connection = new DatabaseConnect();
-        //todo should remove student event links (then remove events) when it is past the date
-        connection.resetBusyness();
-        connection.deleteRoutes();
-        connection.calculateRouting(busynessFactor);
+        if(busynessFactor>0)
+        {
+            System.out.println("Calculating routing...");
+            DatabaseConnect connection = new DatabaseConnect();
+            connection.resetBusyness();
+            connection.deleteRoutes();
+            connection.calculateRouting(busynessFactor);
+        }
+        else{
+            System.out.println("The busyness factor must be larger than 0");
+        }
     }
 }
