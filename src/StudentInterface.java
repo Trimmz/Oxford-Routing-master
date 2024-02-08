@@ -42,15 +42,13 @@ public class StudentInterface {
                 break;
             case 5:
                 break;
-            default:
-                //TODO add loop functionality maybe
         }
     }
 
     private void joinEvent() {
         DatabaseConnect conn = new DatabaseConnect();
         Scanner input = new Scanner(System.in);
-        System.out.println("Here is a list of the existing events, press the corresponding key to add it to your timetable for the next day: "); //TODO figure out if this is really meant to say for the next day and do for remove event asw
+        System.out.println("Here is a list of the existing events, press the corresponding key to add it to your timetable for the next day: ");
         conn.getListOfEvents();
         System.out.print("Event: ");
         int event = input.nextInt();

@@ -417,13 +417,13 @@ public class DatabaseConnect
     }
 
     // Method to view a student's timetable for tomorrow
-    public void viewStudentTimetable(int studentID){//todo fix so it only shows tomorrows timetable but should also have a function to show all events to be easily modifiable
+    public void viewStudentTimetable(int studentID){
         try {
             Statement stmt = conn.createStatement();
 
             // SQL query to retrieve events for a specific student from the "StudentEventLinker" and "Event" tables
             String sql = "SELECT StudentEventLinker.EventID, Event.EventName, Event.StartTime FROM StudentEventLinker, Event WHERE StudentID = " + studentID +
-                    " AND Event.EventID = StudentEventLinker.EventID;";
+                    " AND Event.EventID = StudentEventLinker.EventID AND Event.StartTime ;";
             ResultSet rs = stmt.executeQuery(sql);
 
             // Iterate through the result set and print EventID, EventName, and StartTime
@@ -462,8 +462,13 @@ public class DatabaseConnect
     // Method to calculate routing for students and update route-related tables
     public void calculateRouting(int busynessFactor)
     {
-        try {//TODO MOST IMPORTANT IS TO REMOVE DATA FOR EVENTS THAT HAPPENED ALREADY
+        try {
             Statement stmt = conn.createStatement();
+
+            // Query to delete any outdated events
+            stmt.executeUpdate("DELETE FROM StudentEventLinker WHERE StudentEventLinker.StudentEventLinkerID IN (SELECT StudentRouteLinker.StudentEventLinkerID FROM StudentEventLinker INNER JOIN StudentRouteLinker ON StudentEventLinker.StudentEventLinkerID = StudentRouteLinker.StudentEventLinkerID INNER JOIN Event ON StudentEventLinker.EventID = Event.EventID WHERE Event.StartTime < DATETIME('now'));");
+            stmt.executeUpdate("DELETE FROM StudentEventLinker WHERE StudentEventLinker.EventID IN (SELECT Event.EventID FROM Event WHERE Event.StartTime < DATETIME('now'));");
+            stmt.executeUpdate("DELETE FROM Event WHERE StartTime < DATETIME('now');");
 
             // Query to get the total number of students
             ResultSet numberOfStudents = stmt.executeQuery("SELECT COUNT(StudentID) FROM Student;");
@@ -680,11 +685,10 @@ public class DatabaseConnect
     }
 
     // Method to retrieve a student's timetable events for a specific date
-    public LinkedList<Integer> getStudentTimetable(int studentID) //todo add data for tomorrow to test or just set it instead of now to a particular date allowing for testing
+    public LinkedList<Integer> getStudentTimetable(int studentID)
     {
         LinkedList<Integer> timetable = new LinkedList<Integer>();
         try {
-            //todo check sql bc i used a join
             Statement stmt = conn.createStatement();
 
             // SQL query to retrieve EventID for a student's timetable events
@@ -709,8 +713,8 @@ public class DatabaseConnect
         return timetable;
     }
 
-    // Method to retrieve a list of places (HomePlaceID and Event.PlaceID) on a student's timetable for a specific date (TODO: Enable date filtering for testing)
-    public LinkedList<Integer> getListOfPlacesOnTimetable(int studentID) //todo add data for tomorrow to test or just set it instead of now to a particular date allowing for testing
+    // Method to retrieve a list of places (HomePlaceID and Event.PlaceID) on a student's timetable for a specific date
+    public LinkedList<Integer> getListOfPlacesOnTimetable(int studentID)
     {
         LinkedList<Integer> timetable = new LinkedList<Integer>();
         try {

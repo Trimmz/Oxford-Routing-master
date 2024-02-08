@@ -212,7 +212,6 @@ public class HashMap<K, V>{
     }
 
     public HashMapElement getItem(K key) {
-        // TODO MAKE IT O(1)
         HashMapElement<K, V> item = null;
         for (int i = 0; i < maxSize; i++) {
             HashMapElement<K, V> tempItem = items[i];

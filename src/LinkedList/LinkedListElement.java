@@ -35,7 +35,6 @@ public class LinkedListElement <T>{
     {
         return this;
     }
-    //TODO maybe add in a setValue()
 
     public LinkedListElement<T> getPrevious()
     {

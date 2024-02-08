@@ -14,7 +14,7 @@ public class Dijkstra {
     {
         // Create a hashmap of each node and the current known distances to them from the start node
         HashMap<Integer, Integer> distances = new HashMap<Integer, Integer>(g.getNumberOfNodes());
-        HashMap<Integer, String> paths = new HashMap<Integer, String>(g.getNumberOfNodes()); //TODO EXPLAIN
+        HashMap<Integer, String> paths = new HashMap<Integer, String>(g.getNumberOfNodes());
         LinkedList<Integer> nodes  = g.getNodeArray();
         PriorityQueue<Integer> queue = new PriorityQueue<Integer>();
         LinkedList<Integer> vistedNodes = new LinkedList<Integer>();
@@ -27,9 +27,8 @@ public class Dijkstra {
                 // The distance from the start node to the start node is known to be 0
                 distances.add(startNode, 0);
 
-                // Path to get from start node to start node requires going through the startnode //TODO EXPLAIN
-                paths.add(startNode, startNode+""); //TODO EXPLAIN
-
+                // Path to get from start node to start node requires going through the startnode
+                paths.add(startNode, startNode+"");
 
                 // Add the startnode to the front of the priority queue as its distance is 0
                 queue.enQueue(nodes.get(i).getValue(), 0);
